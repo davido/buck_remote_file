@@ -1,31 +1,32 @@
-# Replace Gerrit's home baked maven_jar() toolchain
-# with native remote_file() rule
+java_binary(
+  name = 'plugin',
+  main_class = 'org.ostrovsky.buck.Main',
+  manifest_file = 'resources/MANIFEST.MF',
+  deps = [':plugin-lib'],
+)
 
-#maven_jar(
-#  name = 'httpmime',
-#  id = 'org.apache.httpcomponents:httpmime:4.3.4',
-#  bin_sha1 = '54ffde537682aea984c22fbcf0106f21397c5f9b',
-#  src_sha1 = '0651e21152b0963661068f948d84ed08c18094f8',
-#  license = 'Apache2.0',
-#)
+java_library(
+  name = 'plugin-lib',
+  srcs = glob(['java/**/*.java']),
+  deps = [':commons-io'],
+)
 
 prebuilt_jar(
-  name = 'httpmime',
-  binary_jar = ':httpmime-jar',
-  source_jar = ':httpmime-src',
+  name = 'commons-io',
+  binary_jar = ':commons-io-jar',
+  source_jar = ':commons-io-src',
 )
 
 remote_file(
-  name = 'httpmime-jar',
-  sha1 = '54ffde537682aea984c22fbcf0106f21397c5f9b',
-  url = 'mvn:org.apache.httpcomponents:httpmime:jar:4.3.4',
+  name = 'commons-io-jar',
+  sha1 = 'a8762d07e76cfde2395257a5da47ba7c1dbd3dce',
+  url = 'mvn:commons-io:commons-io:jar:1.4',
   out = 'httpmime.jar',
 )
 
 remote_file(
-  name = 'httpmime-src',
-  sha1 = '0651e21152b0963661068f948d84ed08c18094f8',
-  url = 'mvn:org.apache.httpcomponents:httpmime:src:4.3.4',
+  name = 'commons-io-src',
+  sha1 = '48753e43ff29409fbbeadfb36186cbe27e41b179',
+  url = 'mvn:commons-io:commons-io:src:1.4',
   out = 'httpmime-src.jar',
 )
-
